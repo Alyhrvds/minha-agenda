@@ -23,6 +23,7 @@
     /* pessoal */
     --c-p-saude:#0E7C72;     --b-p-saude:#DCF2EF;     --d-p-saude:#14A396;
     --c-p-exercicio:#3B7D2B; --b-p-exercicio:#E4F3DD; --d-p-exercicio:#5BAA45;
+    --c-p-autocuidado:#8A3FA8; --b-p-autocuidado:#F3E6F8; --d-p-autocuidado:#B46AD6;
     --c-p-faculdade:#2559B8; --b-p-faculdade:#E2EBFA; --d-p-faculdade:#3D7BE0;
     --c-p-social:#C24E2C;    --b-p-social:#FDE6DD;    --d-p-social:#EE7550;
     --c-p-casa:#B0336E;      --b-p-casa:#FBE3EE;      --d-p-casa:#DC5C98;
@@ -432,13 +433,14 @@ function parse(text, ref=today()){
 
 const CATS={
   trabalho:{reuniao:'Reunião',prazo:'Prazo / entrega',tarefa:'Tarefa',outro:'Outros'},
-  pessoal:{saude:'Saúde',exercicio:'Exercício',faculdade:'Faculdade',social:'Social e lazer',casa:'Casa e contas',outro:'Outros'}
+  pessoal:{saude:'Saúde',autocuidado:'Autocuidado',exercicio:'Exercício',faculdade:'Faculdade',social:'Social e lazer',casa:'Casa e contas',outro:'Outros'}
 };
 const RX={
   t:{reuniao:/\b(reuniao|call|alinhamento|meet|meeting|daily|weekly|1:1|one on one|apresentacao|demo|entrevista|comite|workshop|treinamento)\b/,
      prazo:/\b(prazo|entrega|entregar|vence|vencimento|fechamento|deadline|submeter|conciliacao|relatorio|report|pla|fidc)\b/,
      tarefa:/\b(enviar|mandar|responder|revisar|ajustar|atualizar|criar|montar|preparar|conferir|validar|subir|protocolo|planilha|fluxo|n8n|email)\b/},
   p:{saude:/\b(medico|medica|dentista|consulta|exame|vacina|farmacia|clinica|hospital|oftalmo|dermato|nutri\w*)\b/,
+     autocuidado:/\b(manicure|pedicure|unhas?|cabelo|cabeleireir[ao]|salao|escova|progressiva|hidratacao|corte de cabelo|sobrancelhas?|cilios|depilacao|massagem|limpeza de pele|skincare|skin care|spa|estetica|esteticista|barbeiro|maquiagem|make)\b/,
      exercicio:/\b(academia|treino|corrida|correr|yoga|pilates|natacao|bike|caminhada|crossfit|futebol|musculacao|funcional)\b/,
      faculdade:/\b(faculdade|facul|aula|aulas|prova|provas|tcc|seminario|estudar|estudo|matricula|professor|professora|orientador\w*|monografia|pos|mba|disciplina|semestre|lista de exercicios|trabalho da facul\w*|trabalho em grupo)\b/,
      social:/\b(aniversario|almoco|jantar|cafe|cinema|viagem|show|festa|happy hour|encontro|bar|churrasco|praia|passeio|visita)\b/,
@@ -743,6 +745,9 @@ const GUIDE={
     saude:{what:'Cuidados com a saúde: consultas, exames, vacinas e idas à farmácia.',
       kw:'médico, médica, dentista, consulta, exame, vacina, farmácia, clínica, hospital, oftalmo, dermato, nutri',
       ex:['dentista sexta às 18h','exame de sangue terça 7h','consulta com a dermato dia 2 de dezembro às 15h']},
+    autocuidado:{what:'Cuidar de você sem ser consulta médica: unha, cabelo, sobrancelha, depilação, massagem, estética.',
+      kw:'manicure, pedicure, unha, cabelo, cabeleireira, salão, escova, sobrancelha, cílios, depilação, massagem, limpeza de pele, skincare, spa, estética, barbeiro, maquiagem',
+      ex:['manicure sábado às 10h','salão sexta 18h para cortar o cabelo','limpeza de pele dia 28 às 14h']},
     exercicio:{what:'Treinos e atividades físicas.',
       kw:'academia, treino, musculação, funcional, pilates, yoga, corrida, caminhada, natação, bike, crossfit, futebol',
       ex:['pilates quarta às 7h','academia amanhã de manhã','corrida sábado 8h por 1h']},
