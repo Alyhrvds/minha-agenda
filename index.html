@@ -19,6 +19,7 @@
     --c-t-reuniao:#4002FF; --b-t-reuniao:#ECE6FF; --d-t-reuniao:#4002FF;
     --c-t-prazo:#000948;   --b-t-prazo:#E1E3F0;   --d-t-prazo:#000948;
     --c-t-tarefa:#8A5A00;  --b-t-tarefa:#FFF0D2;  --d-t-tarefa:#FBC358;
+    --c-t-folga:#4A4F78;   --b-t-folga:#EEEFF8;   --d-t-folga:#8F95C9;
     --c-t-outro:#5B45C9;   --b-t-outro:#F1EDFF;   --d-t-outro:#B9A6FF;
     /* pessoal */
     --c-p-saude:#0E7C72;     --b-p-saude:#DCF2EF;     --d-p-saude:#14A396;
@@ -27,6 +28,9 @@
     --c-p-faculdade:#2559B8; --b-p-faculdade:#E2EBFA; --d-p-faculdade:#3D7BE0;
     --c-p-social:#C24E2C;    --b-p-social:#FDE6DD;    --d-p-social:#EE7550;
     --c-p-casa:#B0336E;      --b-p-casa:#FBE3EE;      --d-p-casa:#DC5C98;
+    --c-p-documentos:#80590E; --b-p-documentos:#F6EEDC; --d-p-documentos:#C9962E;
+    --c-p-pets:#7A4A2E;      --b-p-pets:#F2E8E1;      --d-p-pets:#9C6B4E;
+    --c-p-viagem:#0B6F95;    --b-p-viagem:#DDF1FA;    --d-p-viagem:#2BA9D6;
     --c-p-outro:#6E6357;     --b-p-outro:#EEE9E2;     --d-p-outro:#A3978A;
     --hour:56px;
   }
@@ -142,6 +146,7 @@
   .avatar{width:38px;height:38px;border-radius:12px;background:var(--ink);color:var(--paper);display:grid;place-items:center;font-family:Fraunces,serif;font-size:20px}
   .chathead .n{font-weight:700}
   .chathead .s{font-size:12.5px;color:var(--ink3)}
+  .chathead .clear+.clear{margin-left:10px}
   .chathead .clear{margin-left:auto;border:0;background:none;color:var(--ink3);font-size:12.5px;text-decoration:underline}
   .msgs{flex:1;overflow:auto;padding:18px 18px 8px;display:flex;flex-direction:column;gap:10px}
   .msg{max-width:86%;padding:10px 13px;border-radius:16px;line-height:1.45;font-size:14px;animation:pop .25s ease}
@@ -212,11 +217,83 @@
 .ckpanel .ckmsg{font-size:12.5px;color:#8F95C9}
 .day .ckn{position:absolute;right:8px;bottom:8px;font-size:10.5px;font-weight:700;color:#4002FF;background:#ECE6FF;border-radius:6px;padding:1px 5px}
 .day.sel .ckn{background:#3A3833;color:#FBC358}
+
+/* edição e escolha manual de categoria */
+.ev,.chip{cursor:pointer}
+.ev:hover{filter:brightness(.97)}
+.preview select.catpick{border:0;border-radius:6px;padding:2px 6px;font:inherit;font-weight:600;cursor:pointer;max-width:220px}
+.edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.edit-grid label{margin:10px 0!important}
+.edit-grid .full{grid-column:1/-1}
+.cloud-modal select{display:block;width:100%;box-sizing:border-box;padding:11px;border:1px solid var(--line);border-radius:9px;background:var(--paper);color:var(--ink);font:inherit;margin-top:6px}
+.edit-allday{display:flex!important;align-items:center;gap:8px;font-size:13.5px}
+.edit-allday input{display:inline-block!important;width:auto!important;margin:0!important}
+.edit-actions{display:flex;gap:8px;margin-top:14px}
+.edit-actions button{flex:1}
+#edit-save{background:var(--navy)!important;color:#fff!important;border-color:var(--navy)!important}
+#edit-del{color:#C93B3F!important;border-color:#F0C9C7!important;flex:0 0 auto!important}
+.cloud-modal #edit-close{float:right}
+#edit-form{clear:both}
+.chathead .clear{white-space:nowrap}
+
+/* dia / semana */
+.dhr{display:flex;align-items:center;gap:12px}
+.vtog{display:inline-flex;border:1px solid var(--line);border-radius:10px;padding:2px;background:var(--bg)}
+.vtog button{border:0;background:none;border-radius:8px;padding:4px 12px;font-size:12.5px;font-weight:700;color:var(--ink3)}
+.vtog button.on{background:var(--paper);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.wkhead{display:grid;grid-template-columns:52px repeat(7,minmax(0,1fr));border-bottom:1px solid var(--line);padding-bottom:6px}
+.wkhead .wh{padding:0 4px;min-width:0;display:flex;flex-direction:column;gap:3px}
+.wkhead .wh>button{border:0;background:none;text-align:left;padding:2px 4px;border-radius:8px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
+.wkhead .wh>button b{display:block;font-family:Fraunces,serif;font-size:19px;font-weight:500;letter-spacing:0;color:var(--ink)}
+.wkhead .wh>button:hover{background:var(--bg)}
+.wkhead .wh.today>button b{color:var(--accent)}
+.wkhead .wchip{font-size:11px;font-weight:700;border-radius:6px;padding:2px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.wkcol{position:absolute;top:0;bottom:0;border-left:1px solid var(--line)}
+.wkcol.today{background:rgba(64,2,255,.035)}
+.grid.wk .ev{font-size:11.5px;padding:3px 4px 3px 7px}
+.grid.wk .ev .t{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.2;word-break:break-word}
+.grid.wk .ev .h{font-size:10.5px}
+.grid.wk .ev .x{display:none}
+.grid.wk .ev .ok{width:15px;height:15px;font-size:9px}
+/* feito / atrasado */
+.ev .ok,.chip .ok{flex-shrink:0;width:18px;height:18px;border-radius:50%;border:1.5px solid currentColor;background:transparent;color:inherit;display:grid;place-items:center;font-size:11px;line-height:1;padding:0;opacity:.55;margin-right:2px}
+.ev .ok:hover,.chip .ok:hover{opacity:1}
+.ev.done .ok,.chip.done .ok{background:currentColor;opacity:1}
+.ev.done .ok::after,.chip.done .ok::after{content:"✓";color:#fff;font-weight:800}
+.ev.done,.chip.done{opacity:.55}
+.ev.done .t,.chip.done .ct{text-decoration:line-through}
+.ev .body{flex:1;min-width:0}
+.ev{gap:6px!important;justify-content:flex-start!important}
+.ev.late{box-shadow:inset 0 0 0 2px #E5484D}
+.chip.late{background:#FDE9E7!important;color:#C93B3F!important}
+.chip .ct{display:inline}
+.chip .lt{font-weight:600;opacity:.8;font-size:11.5px}
+.rec{opacity:.6;font-size:.9em;margin-left:3px}
+.edit-done{display:flex!important;align-items:center;gap:8px;font-size:13.5px}
+.edit-done input{display:inline-block!important;width:auto!important;margin:0!important}
+#edit-series{display:none;grid-column:1/-1;font-size:13px}
+#edit-series.on{display:flex;align-items:center;gap:8px}
+#edit-series input{display:inline-block!important;width:auto!important;margin:0!important}
+#edit-delser{color:#C93B3F!important;border-color:#F0C9C7!important;width:100%;margin-top:8px}
 </style>
 </head>
 <body>
 <div class="cloud-bar"><span id="cloud-status" role="status">Conectando ao Supabase…</span><div class="cloud-buttons"><nav class="appsw light" aria-label="Trocar de app"><a href="https://alyhrvds.github.io/coockiepit/" title="Ir para Coockiepit"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M20.5 12.6A8.5 8.5 0 1 1 11.4 3.5a3 3 0 0 0 3.6 3.6 3 3 0 0 0 3.6 3.6c.6.6 1.3 1.1 1.9 1.9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="8.5" cy="10" r="1.3" fill="currentColor"/><circle cx="9.5" cy="15.5" r="1.3" fill="currentColor"/><circle cx="14.5" cy="15" r="1.3" fill="currentColor"/></svg><span class="lbl">Coockiepit</span></a><span aria-current="page"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 10h18" stroke="currentColor" stroke-width="2"/><path d="M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="8.5" cy="14.5" r="1.3" fill="currentColor"/><circle cx="12" cy="14.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="14.5" r="1.3" fill="currentColor"/></svg><span class="lbl">Agenda</span></span></nav><button id="mig-open" type="button" hidden>Trazer da agenda antiga</button><button id="cloud-account" type="button">Conta</button><button id="cloud-logout" type="button">Sair</button></div></div>
 <dialog id="cloud-login" class="cloud-modal" aria-labelledby="cloud-title"><button id="cloud-close" type="button" aria-label="Fechar">×</button><h2 id="cloud-title">Sua agenda, com você</h2><p>Entre com o mesmo e-mail e senha do Coockiepit.</p><form id="cloud-form"><label>E-mail<input id="cloud-email" type="email" autocomplete="username" required></label><label>Senha<input id="cloud-password" type="password" autocomplete="current-password" required></label><button id="cloud-enter" type="submit">Entrar na agenda</button><p id="cloud-error" role="status"></p></form><p class="cloud-note">Os compromissos desta versão ficam na sua conta. Os exemplos da prévia não são importados. WhatsApp ainda não conectado.</p></dialog>
+<dialog id="edit" class="cloud-modal" aria-labelledby="edit-title"><button id="edit-close" type="button" aria-label="Fechar">×</button><h2 id="edit-title">Editar compromisso</h2>
+<form id="edit-form"><div class="edit-grid">
+<label class="full">Título<input id="edit-t" type="text" required></label>
+<label class="full">Data<input id="edit-d" type="date" required></label>
+<label class="full edit-allday"><input id="edit-all" type="checkbox"> Dia todo (sem horário)</label>
+<label>Início<input id="edit-s" type="time"></label>
+<label>Fim<input id="edit-e" type="time"></label>
+<label>Aba<select id="edit-a"><option value="trabalho">Trabalho</option><option value="pessoal">Pessoal</option></select></label>
+<label>Categoria<select id="edit-c"></select></label>
+<label class="full">Observação<input id="edit-n" type="text" placeholder="opcional"></label>
+<label class="full edit-done"><input id="edit-done" type="checkbox"> Feito ✓</label>
+<label id="edit-series"><input id="edit-ser" type="checkbox"> <span id="edit-ser-lbl">Aplicar também aos próximos desta série</span></label>
+</div><p id="edit-msg" role="status" style="font-size:12.5px;color:#a12e3f;min-height:16px;margin:4px 0 0"></p>
+<div class="edit-actions"><button id="edit-del" type="button">Excluir</button><button id="edit-cancel" type="button">Cancelar</button><button id="edit-save" type="submit">Salvar</button></div><button id="edit-delser" type="button" hidden>Excluir este e os próximos da série</button></form></dialog>
 <dialog id="mig" class="cloud-modal" aria-labelledby="mig-title"><button id="mig-close" type="button" aria-label="Fechar">×</button><h2 id="mig-title">Trazer da agenda antiga</h2><p>Entre com o e-mail e a senha que você usava na agenda antes da mudança. Eu copio os seus compromissos de lá para cá. Os que já estiverem aqui não são duplicados.</p><form id="mig-form"><label>E-mail<input id="mig-email" type="email" autocomplete="username" required></label><label>Senha<input id="mig-password" type="password" autocomplete="current-password" required></label><button id="mig-go" type="submit" style="width:100%;background:var(--navy);color:#fff">Trazer compromissos</button><p id="mig-msg" role="status" style="font-size:12.5px;min-height:18px"></p></form></dialog>
 
 <div class="app">
@@ -240,9 +317,10 @@
     <div class="sheet">
       <div class="week" id="week"></div>
       <div class="legend" id="legend"></div>
-      <div class="dayhead"><h2 id="dayTitle"></h2><span id="dayCount"></span></div>
+      <div class="dayhead"><h2 id="dayTitle"></h2><div class="dhr"><span id="dayCount"></span><div class="vtog" role="group" aria-label="Visão"><button type="button" data-m="dia">Dia</button><button type="button" data-m="semana">Semana</button></div></div></div>
       <div class="ckpanel" id="ckpanel" hidden></div>
       <div class="allday" id="allday"></div>
+      <div class="wkhead" id="wkhead" hidden></div>
       <div class="scroll" id="scroll"><div class="grid" id="grid"></div></div>
     </div>
   </section>
@@ -251,7 +329,7 @@
     <div class="chathead">
       <div class="avatar">a</div>
       <div><div class="n">Agenda</div><div class="s">escreva como se fosse uma mensagem</div></div>
-      <button class="clear" id="reset">recomeçar</button>
+      <button class="clear" id="clearChat" type="button" title="Apaga as mensagens da conversa (os compromissos continuam salvos)">limpar</button><button class="clear" id="reset">recomeçar</button>
     </div>
     <div class="msgs" id="msgs"></div>
     <div class="composer">
@@ -295,21 +373,25 @@ function createCloud({url,key,storage=localStorage,fetcher=fetch}){
   const headers={apikey:key,'Content-Type':'application/json'};if(token)headers.Authorization='Bearer '+token;if(path.startsWith('/rest/'))headers.Prefer='return=representation';
   let response;try{response=await fetcher(url.replace(/\/$/,'')+path,{method,headers,body:body===undefined?undefined:JSON.stringify(body),signal:AbortSignal.timeout(20000)});}catch{throw new Error('Não consegui acessar o Supabase. Confira a conexão e tente novamente.');}
   const text=await response.text();let data;try{data=text?JSON.parse(text):null;}catch{}
-  if(!response.ok){let msg=data?.error_description||data?.msg||data?.message||'Falha de conexão ('+response.status+').';if(response.status===401||response.status===403)msg='Acesso não autorizado. Confira seu login e as regras de acesso.';if(data?.error_code==='invalid_credentials')msg='E-mail ou senha incorretos.';if(data?.code==='PGRST205')msg='A tabela agenda_events não foi encontrada. Confira se o SQL foi executado no mesmo projeto.';throw new Error(msg);}return data;
+  if(!response.ok){let msg=data?.error_description||data?.msg||data?.message||'Falha de conexão ('+response.status+').';if(response.status===401||response.status===403)msg='Acesso não autorizado. Confira seu login e as regras de acesso.';if(data?.error_code==='invalid_credentials')msg='E-mail ou senha incorretos.';if(data?.code==='42703'||data?.code==='PGRST204')msg='Falta rodar o SQL novo da agenda (agenda_sql_v2.sql) no Supabase do Coockiepit.';if(data?.code==='PGRST205')msg='A tabela agenda_events não foi encontrada. Confira se o SQL foi executado no mesmo projeto.';throw new Error(msg);}return data;
  }
  async function token(){try{session=JSON.parse(storage.getItem(sk)||'null');}catch{}if(!session)throw new Error('Entre na sua conta para acessar a agenda.');if(session.expires_at*1000<Date.now()+60000){if(!refreshJob)refreshJob=req('/auth/v1/token?grant_type=refresh_token',{method:'POST',body:{refresh_token:session.refresh_token}}).then(s=>{remember(s);return s;}).finally(()=>refreshJob=null);await refreshJob;}return session.access_token;}
- function payload(e){return {id:e.id,title:e.title,date:e.date,start:e.start?.slice(0,5)||null,end:e.end?.slice(0,5)||null,area:e.area,cat:e.cat,person:e.person||'',notes:e.notes||''};}
+ function payload(e){return {id:e.id,title:e.title,date:e.date,start:e.start?.slice(0,5)||null,end:e.end?.slice(0,5)||null,area:e.area,cat:e.cat,person:e.person||'',notes:e.notes||'',done:!!e.done,series:e.series||null};}
  async function signIn(email,password){const s=await req('/auth/v1/token?grant_type=password',{method:'POST',body:{email,password}});remember(s);return s.user;}
  async function signOut(){try{if(session)await req('/auth/v1/logout',{method:'POST',token:await token()});}finally{remember(null);}}
- async function list(){const jwt=await token();const out=[];for(let offset=0;;offset+=500){const rows=await req('/rest/v1/agenda_events?select=id,title,date,start,end,area,cat,person,notes&order=date.asc,id.asc&limit=500&offset='+offset,{token:jwt});if(!Array.isArray(rows))throw new Error('Resposta inesperada ao carregar a agenda.');out.push(...rows.map(e=>({...e,start:e.start?.slice(0,5)||null,end:e.end?.slice(0,5)||null})));if(rows.length<500)return out;}}
+ async function list(){const jwt=await token();const out=[];for(let offset=0;;offset+=500){const rows=await req('/rest/v1/agenda_events?select=id,title,date,start,end,area,cat,person,notes,done,series&order=date.asc,id.asc&limit=500&offset='+offset,{token:jwt});if(!Array.isArray(rows))throw new Error('Resposta inesperada ao carregar a agenda.');out.push(...rows.map(e=>({...e,done:!!e.done,series:e.series||null,start:e.start?.slice(0,5)||null,end:e.end?.slice(0,5)||null})));if(rows.length<500)return out;}}
  async function apply(before,after){
-  const b=new Map(before.map(e=>[e.id,payload(e)])),a=new Map(after.map(e=>[e.id,payload(e)]));const changed=[...new Set([...b.keys(),...a.keys()])].filter(id=>JSON.stringify(b.get(id))!==JSON.stringify(a.get(id)));
-  if(changed.length>1)throw new Error('Faça uma alteração por vez para preservar os outros compromissos.');if(!changed.length)return;
-  const id=changed[0],old=b.get(id),value=a.get(id),jwt=await token();
-  if(value&&((value.start===null)!==(value.end===null)||value.start&&value.end<=value.start))throw new Error('O fim precisa ser depois do início no mesmo dia. Ajuste o horário na mensagem.');
-  const method=!value?'DELETE':old?'PATCH':'POST',path='/rest/v1/agenda_events'+(method==='POST'?'':'?id=eq.'+encodeURIComponent(id));
-  try{const rows=await req(path,{method,body:value||undefined,token:jwt});if(!Array.isArray(rows)||rows.length!==1)throw new Error('O compromisso não foi encontrado ou não pode ser alterado. Atualize a agenda.');}
-  catch(e){e.message+=' Se houve falha de conexão, clique em atualizar antes de repetir a operação.';throw e;}
+  const b=new Map(before.map(e=>[e.id,payload(e)])),a=new Map(after.map(e=>[e.id,payload(e)]));
+  const changed=[...new Set([...b.keys(),...a.keys()])].filter(id=>JSON.stringify(b.get(id))!==JSON.stringify(a.get(id)));
+  if(!changed.length)return;
+  for(const id of changed){const v=a.get(id);if(v&&((v.start===null)!==(v.end===null)||v.start&&v.end<=v.start))throw new Error('O fim precisa ser depois do início no mesmo dia. Ajuste o horário.');}
+  const jwt=await token(),ins=changed.filter(id=>!b.has(id)).map(id=>a.get(id)),del=changed.filter(id=>!a.has(id)),upd=changed.filter(id=>b.has(id)&&a.has(id));
+  const NF='O compromisso não foi encontrado ou não pode ser alterado. Atualize a agenda.';
+  try{
+   for(let i=0;i<ins.length;i+=200){const part=ins.slice(i,i+200);const rows=await req('/rest/v1/agenda_events',{method:'POST',body:part,token:jwt});if(!Array.isArray(rows)||rows.length!==part.length)throw new Error('Nem todos os compromissos foram salvos.');}
+   for(let i=0;i<del.length;i+=100){const part=del.slice(i,i+100);const rows=await req('/rest/v1/agenda_events?id=in.('+part.map(encodeURIComponent).join(',')+')',{method:'DELETE',token:jwt});if(!Array.isArray(rows)||rows.length!==part.length)throw new Error(NF);}
+   for(const id of upd){const rows=await req('/rest/v1/agenda_events?id=eq.'+encodeURIComponent(id),{method:'PATCH',body:a.get(id),token:jwt});if(!Array.isArray(rows)||rows.length!==1)throw new Error(NF);}
+  }catch(e){e.message+=' Se houve falha de conexão, clique em atualizar antes de repetir a operação.';throw e;}
  }
  async function rest(path,opts={}){return req(path,{...opts,token:await token()});}
  return {signIn,signOut,list,apply,payload,rest,get user(){return session?.user||null;}};
@@ -338,7 +420,7 @@ const NUM={um:1,uma:1,dois:2,duas:2,tres:3,quatro:4,cinco:5};
 function norm(s){let o='';for(let i=0;i<s.length;i++){const c=s[i];let n=c.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');o+=n.length===1?n:c}return o}
 
 const MONTHS='(janeiro|fevereiro|marco|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)';
-const PRE=/(?:\b(?:na|no|nas|nos|em|as|a|de|da|do|para|pra|pro|ate|dia|nesta|neste|nessa|nesse)\s+)+$/;
+const PRE=/(?:\b(?:na|no|nas|nos|em|as|a|de|da|do|para|pra|pro|ate|dia|nesta|neste|nessa|nesse|partir|comecando|começando)\s+)+$/;
 
 function parse(text, ref=today()){
   const n=norm(text); const rm=[];
@@ -356,6 +438,31 @@ function parse(text, ref=today()){
     return null;
   }
   let m, date=null, start=null, end=null, dur=null, period=null;
+
+  // repetição: "toda terça e quinta", "todo dia útil", "todo dia 10", "a cada 15 dias", "até 20/12"
+  let rec=null;
+  const DW='(?:segunda|terca|quarta|quinta|sexta|sabado|domingo)s?(?:\\s*-?\\s*feiras?)?';
+  if((m=take(/\b(?:tod[oa]s?\s+(?:os\s+)?dias?\s+ute?is|tod[oa]s?\s+(?:os\s+)?dias?\s+util|dias\s+uteis|(?:de|da)\s+segunda\s+a\s+sexta(?:\s*-?\s*feira)?)\b/))) rec={type:'weekly',days:[1,2,3,4,5]};
+  else if((m=take(/\b(?:todos\s+os\s+dias|todo\s+(?:santo\s+)?dia(?!\s+\d)|diariamente)\b/))) rec={type:'daily'};
+  else if((m=take(new RegExp('\\btod[ao]s?\\s+(?:as\\s+|os\\s+)?'+DW+'(?:\\s*(?:,|e)\\s*(?:as\\s+|os\\s+|a\\s+|o\\s+)?'+DW+')*')))){
+    const ds=[...m[0].matchAll(/segunda|terca|quarta|quinta|sexta|sabado|domingo/g)].map(x=>WDN[x[0]]);
+    rec={type:'weekly',days:[...new Set(ds)].sort()};
+  }
+  else if((m=take(/\b(?:a\s+cada\s+(?:duas|2)\s+semanas|a\s+cada\s+15\s+dias|quinzenal(?:mente)?|de\s+15\s+em\s+15\s+dias)\b/))) rec={type:'weekly',interval:2,days:null};
+  else if((m=take(/\b(?:toda\s+semana|semanalmente|uma\s+vez\s+por\s+semana)\b/))) rec={type:'weekly',days:null};
+  else if((m=take(/\b(?:todo\s+(?:dia\s+)?(\d{1,2})(?:\s+(?:de\s+)?(?:cada|todo)\s+mes|\s+do\s+mes)?|todo\s+mes(?:\s+(?:no\s+)?dia\s+(\d{1,2}))?|todos\s+os\s+meses(?:\s+(?:no\s+)?dia\s+(\d{1,2}))?|mensalmente)\b/))) rec={type:'monthly',day:+(m[1]||m[2]||m[3])||null};
+  if(rec){
+    if((m=take(/\bate\s+(?:o\s+)?(?:dia\s+)?(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?\b/))){
+      let y=m[3]?+m[3]:ref.getFullYear(); if(y<100) y+=2000; let d=new Date(y,+m[2]-1,+m[1]); if(!m[3]&&d<ref) d.setFullYear(y+1); rec.until=iso(d);
+    } else if((m=take(new RegExp('\\bate\\s+(?:o\\s+)?(?:dia\\s+)?(\\d{1,2})\\s+de\\s+'+MONTHS+'\\b')))){
+      let d=new Date(ref.getFullYear(),MOLN.indexOf(m[2]),+m[1]); if(d<ref) d.setFullYear(d.getFullYear()+1); rec.until=iso(d);
+    } else if((m=take(new RegExp('\\bate\\s+(?:o\\s+)?(?:(?:fim|final)\\s+de\\s+)?'+MONTHS+'\\b')))){
+      const mo=MOLN.indexOf(m[1]); let y=ref.getFullYear(); if(mo<ref.getMonth()) y++; rec.until=iso(new Date(y,mo+1,0));
+    } else if((m=take(/\bate\s+o\s+(?:fim|final)\s+do\s+ano\b/))) rec.until=iso(new Date(ref.getFullYear(),11,31));
+    else if((m=take(/\b(?:por|durante)\s+(\d+|uma?|dois|duas|tres|quatro|cinco)\s+(semanas?|mes|meses)\b/))){
+      const k=NUM[m[1]]??+m[1]; rec.until=iso(m[2].startsWith('sem')?addDays(ref,7*k-1):new Date(ref.getFullYear(),ref.getMonth()+k,ref.getDate()-1));
+    }
+  }
 
   // data
   if((m=take(/\bdepois de amanha\b/))) date=addDays(ref,2);
@@ -428,22 +535,26 @@ function parse(text, ref=today()){
   }while(t!==prev);
   t=t?t[0].toUpperCase()+t.slice(1):'';
 
-  return {title:t, date:date?iso(date):null, start:start===null?null:toHM(start), end:end===null?null:toHM(Math.min(end,1439)), hasDate:!!date, hasTime:start!==null};
+  return {rec, title:t, date:date?iso(date):null, start:start===null?null:toHM(start), end:end===null?null:toHM(Math.min(end,1439)), hasDate:!!date, hasTime:start!==null};
 }
 
 const CATS={
-  trabalho:{reuniao:'Reunião',prazo:'Prazo / entrega',tarefa:'Tarefa',outro:'Outros'},
-  pessoal:{saude:'Saúde',autocuidado:'Autocuidado',exercicio:'Exercício',faculdade:'Faculdade',social:'Social e lazer',casa:'Casa e contas',outro:'Outros'}
+  trabalho:{reuniao:'Reunião',prazo:'Prazo / entrega',tarefa:'Tarefa',folga:'Folga e ausência',outro:'Outros'},
+  pessoal:{saude:'Saúde',autocuidado:'Autocuidado',exercicio:'Exercício',faculdade:'Faculdade',social:'Social e lazer',casa:'Casa e contas',documentos:'Documentos',pets:'Pets',viagem:'Viagem',outro:'Outros'}
 };
 const RX={
-  t:{reuniao:/\b(reuniao|call|alinhamento|meet|meeting|daily|weekly|1:1|one on one|apresentacao|demo|entrevista|comite|workshop|treinamento)\b/,
+  t:{folga:/\b(ferias|folga|folgas|day off|home office|atestado|abono|ponto facultativo|recesso|afastamento|licenca|banco de horas|ausencia|ausente)\b/,
+     reuniao:/\b(reuniao|call|alinhamento|meet|meeting|daily|weekly|1:1|one on one|apresentacao|demo|entrevista|comite|workshop|treinamento)\b/,
      prazo:/\b(prazo|entrega|entregar|vence|vencimento|fechamento|deadline|submeter|conciliacao|relatorio|report|pla|fidc)\b/,
      tarefa:/\b(enviar|mandar|responder|revisar|ajustar|atualizar|criar|montar|preparar|conferir|validar|subir|protocolo|planilha|fluxo|n8n|email)\b/},
-  p:{saude:/\b(medico|medica|dentista|consulta|exame|vacina|farmacia|clinica|hospital|oftalmo|dermato|nutri\w*)\b/,
+  p:{pets:/\b(veterinari[oa]|vet|banho e tosa|tosa|petshop|pet shop|racao|vermifugo|castracao|cachorr[oa]|gat[oa]|dog|pet|pets)\b/,
+     viagem:/\b(viagem|viajar|voo|aeroporto|passagem|passagens|hotel|hospedagem|airbnb|check-?in|check-?out|mala|rodoviaria|embarque)\b/,
+     documentos:/\b(cartorio|passaporte|rg|cnh|carteira de motorista|detran|imposto de renda|irpf|declaracao do ir|inss|receita federal|cpf|documentos?|certidao|procuracao|reconhecer firma|despachante|ipva|licenciamento|titulo de eleitor|agencia do banco|ir ao banco|ir no banco|gerente do banco|poupatempo)\b/,
+     saude:/\b(medico|medica|dentista|consulta|exame|vacina|farmacia|clinica|hospital|oftalmo|dermato|nutri\w*)\b/,
      autocuidado:/\b(manicure|pedicure|unhas?|cabelo|cabeleireir[ao]|salao|escova|progressiva|hidratacao|corte de cabelo|sobrancelhas?|cilios|depilacao|massagem|limpeza de pele|skincare|skin care|spa|estetica|esteticista|barbeiro|maquiagem|make)\b/,
      exercicio:/\b(academia|treino|corrida|correr|yoga|pilates|natacao|bike|caminhada|crossfit|futebol|musculacao|funcional)\b/,
-     faculdade:/\b(faculdade|facul|aula|aulas|prova|provas|tcc|seminario|estudar|estudo|matricula|professor|professora|orientador\w*|monografia|pos|mba|disciplina|semestre|lista de exercicios|trabalho da facul\w*|trabalho em grupo)\b/,
-     social:/\b(aniversario|almoco|jantar|cafe|cinema|viagem|show|festa|happy hour|encontro|bar|churrasco|praia|passeio|visita)\b/,
+     faculdade:/\b(faculdade|facul|ingles|espanhol|frances|italiano|alemao|idiomas?|curso|cursinho|aula|aulas|prova|provas|tcc|seminario|estudar|estudo|matricula|professor|professora|orientador\w*|monografia|pos|mba|disciplina|semestre|lista de exercicios|trabalho da facul\w*|trabalho em grupo)\b/,
+     social:/\b(aniversario|almoco|jantar|cafe|cinema|show|festa|happy hour|encontro|bar|churrasco|praia|passeio|visita)\b/,
      casa:/\b(pagar|conta|contas|fatura|boleto|aluguel|mercado|compras|comprar|faxina|limpeza|lavar|conserto|manutencao|reforma|condominio)\b/}
 };
 // decide aba (área) e categoria; a aba ativa vale quando o texto não deixa claro
@@ -466,6 +577,7 @@ const stripAreaTag=t=>t.replace(/\s*\((?:trabalho|pessoal)\)\s*$/i,'').replace(/
 
 function intent(text){
   const n=norm(text).trim();
+  if(/^(feito|feita|fiz|ja fiz|conclui|concluido|concluida|terminei|pronto|pronta|paguei|entreguei|enviei|mandei)\b/.test(n)) return 'done';
   if(/^(cancela|cancelar|apaga|apagar|remove|remover|desmarca|desmarcar|exclui|excluir|tira|tirar)\b/.test(n)) return 'delete';
   if(/^(muda|mudar|remarca|remarcar|adia|adiar|passa|passar|move|mover|transfere|transferir|joga|empurra)\b/.test(n)&&/\s(para|pra|pro)\s/.test(n)) return 'move';
   if(/^(o que|oque|que que|qual|quais)\b|^(eu\s+)?tenho (algo|alguma coisa|compromisso|o que)|^(mostra|mostrar|ver|lista|listar)\b|^como (esta|ta)\b|^(minha )?agenda\b|\?\s*$/.test(n)) return 'query';
@@ -475,7 +587,7 @@ function intent(text){
 
 /* ---------- estado ---------- */
 const KEY='agenda-por-mensagem-v2';
-let events=[], sel=iso(today()), weekStart=null, flashId=null, tab='trabalho', both=false;
+let viewMode='dia', events=[], sel=iso(today()), weekStart=null, flashId=null, tab='trabalho', both=false;
 const view=()=>both?'tudo':tab;
 const visible=()=>both?events:events.filter(e=>e.area===tab);
 const uid=()=>crypto.randomUUID();
@@ -535,43 +647,82 @@ function render(){
     b.onclick=()=>{sel=di;render()};
     wk.appendChild(b);
   }
-  const d=fromIso(sel);
-  document.getElementById('dayTitle').textContent=`${WDL[d.getDay()][0].toUpperCase()+WDL[d.getDay()].slice(1)}, ${d.getDate()} de ${d.toLocaleDateString('pt-BR',{month:'long'})}`;
-  const dayEv=sortEv(vis.filter(e=>e.date===sel));
-  document.getElementById('dayCount').textContent=dayEv.length?`${dayEv.length} compromisso${dayEv.length>1?'s':''}`:'livre';
+  const d=fromIso(sel), isWeek=viewMode==='semana';
+  document.querySelectorAll('.vtog button').forEach(b=>b.classList.toggle('on',b.dataset.m===viewMode));
+  const HOUR=56, g=document.getElementById('grid'); g.innerHTML=''; g.classList.toggle('wk',isWeek);
+  for(let h=0;h<24;h++){const r=document.createElement('div');r.className='hr';r.innerHTML=`<b>${pad(h)}:00</b>`;g.appendChild(r)}
+  const ad=document.getElementById('allday'), wh=document.getElementById('wkhead'); ad.innerHTML=''; wh.innerHTML='';
+  const nowLine=(box)=>{const nm=nowMin();const n=document.createElement('div');n.className='now';n.style.top=(nm/60*HOUR)+'px';box.appendChild(n)};
 
-  renderCk(d);
-  const ad=document.getElementById('allday'); ad.innerHTML='';
-  dayEv.filter(e=>!e.start).forEach(e=>{
-    const c=document.createElement('span'); c.className='chip';
-    c.style.cssText=`background:var(--b-${e.cat});color:var(--c-${e.cat})`;
-    c.innerHTML=`${esc(e.title)}<button class="x" title="Remover">×</button>`;
-    c.querySelector('.x').onclick=()=>removeEv(e.id);
-    ad.appendChild(c);
-  });
-
-  const H0=0,H1=24, HOUR=56, g=document.getElementById('grid'); g.innerHTML='';
-  for(let h=H0;h<H1;h++){const r=document.createElement('div');r.className='hr';r.innerHTML=`<b>${pad(h)}:00</b>`;g.appendChild(r)}
-  const timed=dayEv.filter(e=>e.start).map(e=>({e,s:toMin(e.start),f:Math.max(toMin(e.end),toMin(e.start)+20)}));
-  // colunas para eventos sobrepostos
+  if(!isWeek){
+    document.getElementById('dayTitle').textContent=`${WDL[d.getDay()][0].toUpperCase()+WDL[d.getDay()].slice(1)}, ${d.getDate()} de ${d.toLocaleDateString('pt-BR',{month:'long'})}`;
+    const dayEv=sortEv(vis.filter(e=>e.date===sel));
+    document.getElementById('dayCount').textContent=dayEv.length?`${dayEv.length} compromisso${dayEv.length>1?'s':''}`:'livre';
+    renderCk(d); wh.hidden=true;
+    // atrasados de dias anteriores aparecem no topo de hoje
+    if(sel===tIso) sortEv(vis.filter(e=>e.date<tIso&&isLate(e))).forEach(e=>ad.appendChild(chipEl(e,true)));
+    dayEv.filter(e=>!e.start).forEach(e=>ad.appendChild(chipEl(e,false)));
+    placeTimed(g,dayEv,HOUR,false);
+    if(sel===tIso) nowLine(g);
+    if(!dayEv.length){const e=document.createElement('div');e.className='empty';e.style.top=(Math.max(0,((sel===tIso?nowMin():480)-60)/60*HOUR)+40)+'px';e.textContent='Nada por aqui. Mande uma mensagem ao lado →';g.appendChild(e)}
+  } else {
+    const ws=weekStart, we=addDays(ws,6);
+    document.getElementById('dayTitle').textContent=`Semana de ${ws.getDate()}${ws.getMonth()!==we.getMonth()?' de '+ws.toLocaleDateString('pt-BR',{month:'long'}):''} a ${we.getDate()} de ${we.toLocaleDateString('pt-BR',{month:'long'})}`;
+    const wkEv=vis.filter(e=>e.date>=iso(ws)&&e.date<=iso(we));
+    document.getElementById('dayCount').textContent=wkEv.length?`${wkEv.length} compromisso${wkEv.length>1?'s':''}`:'semana livre';
+    document.getElementById('ckpanel').hidden=true; wh.hidden=false;
+    wh.appendChild(document.createElement('div'));
+    for(let i=0;i<7;i++){
+      const dd=addDays(ws,i),di=iso(dd),evs=sortEv(vis.filter(e=>e.date===di));
+      const col=document.createElement('div');col.className='wh'+(di===tIso?' today':'');
+      const hb=document.createElement('button');hb.type='button';hb.title='Ver só este dia';hb.innerHTML=`${WD[dd.getDay()]}<b>${dd.getDate()}</b>`;
+      hb.onclick=()=>{sel=di;viewMode='dia';prefs();render();scrollToFirst()};col.appendChild(hb);
+      evs.filter(e=>!e.start).forEach(e=>{const c=document.createElement('div');c.className='wchip';c.style.cssText=`background:var(--b-${e.cat});color:var(--c-${e.cat})${e.done?';opacity:.55;text-decoration:line-through':''}`;c.textContent=e.title;c.title=e.title+' (clique para editar)';c.onclick=()=>openEdit(e.id);col.appendChild(c)});
+      wh.appendChild(col);
+      const box=document.createElement('div');box.className='wkcol'+(di===tIso?' today':'');box.style.cssText=`left:${i*100/7}%;width:${100/7}%`;
+      placeTimed(box,evs,HOUR,true); if(di===tIso) nowLine(box); g.appendChild(box);
+    }
+  }
+  if(flashId){setTimeout(()=>{flashId=null;document.querySelectorAll('.ev.flash').forEach(x=>x.classList.remove('flash'))},1400)}
+}
+/* compromisso que tem de ser cumprido e passou sem ✓ */
+const TODO_CATS=new Set(['t-prazo','t-tarefa','p-documentos','p-casa']);
+function isLate(e){if(e.done||!TODO_CATS.has(e.cat))return false;const t=iso(today());return e.date<t||(e.date===t&&!!e.end&&toMin(e.end)<nowMin())}
+function chipEl(e,old){
+  const c=document.createElement('span');c.className='chip'+(e.done?' done':'')+(old||isLate(e)?' late':'');
+  c.style.cssText=`background:var(--b-${e.cat});color:var(--c-${e.cat})`;
+  c.innerHTML=`<button class="ok" type="button" title="${e.done?'Desmarcar':'Marcar como feito'}"></button><span class="ct">${esc(e.title)}</span>${e.series?'<span class="rec" title="Repete">🔁</span>':''}${old?`<span class="lt">venceu ${fromIso(e.date).getDate()}/${pad(fromIso(e.date).getMonth()+1)}</span>`:''}<button class="x" title="Remover">×</button>`;
+  c.querySelector('.ok').onclick=ev=>{ev.stopPropagation();toggleDone(e.id)};
+  c.querySelector('.x').onclick=ev=>{ev.stopPropagation();removeEv(e.id)};
+  c.onclick=()=>openEdit(e.id);c.title='Clique para editar';
+  return c;
+}
+function placeTimed(box,list,HOUR,compact){
+  const timed=list.filter(e=>e.start).map(e=>({e,s:toMin(e.start),f:Math.max(toMin(e.end),toMin(e.start)+20)}));
   let cluster=[],clEnd=-1;
   const flush=()=>{const cols=[];cluster.forEach(o=>{let c=cols.findIndex(end=>end<=o.s);if(c<0){c=cols.length;cols.push(0)}cols[c]=o.f;o.col=c});cluster.forEach(o=>o.n=cols.length);cluster=[]};
   timed.forEach(o=>{if(o.s>=clEnd&&cluster.length){flush();clEnd=-1}cluster.push(o);clEnd=Math.max(clEnd,o.f)});flush();
+  const gap=compact?2:6;
   timed.forEach(o=>{
-    const el=document.createElement('div'); el.className='ev'+(o.e.id===flashId?' flash':'');
-    const top=(Math.max(o.s,H0*60)-H0*60)/60*HOUR, h=Math.max(26,(o.f-Math.max(o.s,H0*60))/60*HOUR-3);
-    el.style.cssText=`top:${top+1}px;height:${h}px;left:calc(${o.col/o.n*100}% + 6px);width:calc(${100/o.n}% - 10px);background:var(--b-${o.e.cat});color:var(--c-${o.e.cat});border-color:var(--d-${o.e.cat})`;
-    el.innerHTML=`<div><div class="t">${esc(o.e.title)}</div>${h>40?`<div class="h">${fmtTime(o.e)}</div>`:''}</div><button class="x" title="Remover">×</button>`;
-    el.querySelector('.x').onclick=()=>removeEv(o.e.id);
-    g.appendChild(el);
+    const el=document.createElement('div'); el.className='ev'+(o.e.id===flashId?' flash':'')+(o.e.done?' done':'')+(isLate(o.e)?' late':'');
+    const top=o.s/60*HOUR, h=Math.max(compact?20:26,(o.f-o.s)/60*HOUR-3);
+    el.style.cssText=`top:${top+1}px;height:${h}px;left:calc(${o.col/o.n*100}% + ${gap}px);width:calc(${100/o.n}% - ${gap*2-(compact?0:2)}px);background:var(--b-${o.e.cat});color:var(--c-${o.e.cat});border-color:var(--d-${o.e.cat})`;
+    el.innerHTML=`<button class="ok" type="button" title="${o.e.done?'Desmarcar':'Marcar como feito'}"></button><div class="body"><div class="t">${esc(o.e.title)}${o.e.series&&!compact?'<span class="rec" title="Repete">🔁</span>':''}</div>${h>(compact?44:40)?`<div class="h">${compact?o.e.start:fmtTime(o.e)}</div>`:''}</div><button class="x" title="Remover">×</button>`;
+    el.querySelector('.ok').onclick=ev=>{ev.stopPropagation();toggleDone(o.e.id)};
+    el.querySelector('.x').onclick=ev=>{ev.stopPropagation();removeEv(o.e.id)};
+    el.onclick=()=>openEdit(o.e.id);el.title=o.e.title+' · '+fmtTime(o.e)+' (clique para editar)';
+    box.appendChild(el);
   });
-  if(sel===iso(today())){const nm=nowMin();if(nm>=H0*60){const n=document.createElement('div');n.className='now';n.style.top=((nm-H0*60)/60*HOUR)+'px';g.appendChild(n)}}
-  if(!dayEv.length){const e=document.createElement('div');e.className='empty';e.style.top=(Math.max(0,((sel===iso(today())?nowMin():480)-60)/60*HOUR)+40)+'px';e.textContent='Nada por aqui. Mande uma mensagem ao lado →';g.appendChild(e)}
-  if(flashId){setTimeout(()=>{flashId=null;document.querySelectorAll('.ev.flash').forEach(x=>x.classList.remove('flash'))},1400)}
+}
+async function toggleDone(id){
+  if(!backendReady||mutationBusy)return;const e=events.find(x=>x.id===id);if(!e)return;
+  const before=snap();events=events.map(x=>x.id===id?{...x,done:!x.done}:x);mutationBusy=true;render();
+  try{await persistChanges(before);render()}catch(err){bubble(esc(err.message))}finally{mutationBusy=false;updatePreview()}
 }
 function scrollToFirst(){
-  const dayEv=visible().filter(e=>e.date===sel&&e.start).map(e=>toMin(e.start));
-  const m=dayEv.length?Math.min(...dayEv):(sel===iso(today())?nowMin():480);
+  const ws=iso(mondayOf(fromIso(sel))),we=iso(addDays(mondayOf(fromIso(sel)),6));
+  const dayEv=visible().filter(e=>e.start&&(viewMode==='semana'?e.date>=ws&&e.date<=we:e.date===sel)).map(e=>toMin(e.start));
+  const m=dayEv.length?Math.min(...dayEv):(sel===iso(today())||viewMode==='semana'?nowMin():480);
   document.getElementById('scroll').scrollTop=Math.max(0,(m-60)/60*56);
 }
 
@@ -585,10 +736,9 @@ function bubble(html,who='bot',undoSnap){
       if(mutationBusy||!backendReady)return;
       const previous=new Map(undoSnap.map(e=>[e.id,e])),after=new Map(afterSnap.map(e=>[e.id,e]));
       const touched=[...new Set([...previous.keys(),...after.keys()])].filter(id=>JSON.stringify(previous.get(id))!==JSON.stringify(after.get(id)));
-      if(touched.length!==1)return;
-      const id=touched[0],current=events.find(e=>e.id===id);
-      if(JSON.stringify(current)!==JSON.stringify(after.get(id))){bubble('Esse compromisso mudou depois desta ação. Atualize a agenda antes de desfazer.');return;}
-      const before=snap();events=events.filter(e=>e.id!==id);if(previous.has(id))events.push({...previous.get(id)});
+      if(!touched.length)return;
+      if(touched.some(id=>JSON.stringify(events.find(e=>e.id===id))!==JSON.stringify(after.get(id)))){bubble('Esse compromisso mudou depois desta ação. Atualize a agenda antes de desfazer.');return;}
+      const ts=new Set(touched),before=snap();events=events.filter(e=>!ts.has(e.id));touched.forEach(id=>{if(previous.has(id))events.push({...previous.get(id)})});
       mutationBusy=true;b.disabled=true;
       try{await persistChanges(before);render();b.textContent='Desfeito';}
       catch(error){bubble(esc(error.message));b.disabled=false;}
@@ -620,7 +770,44 @@ function handle(text){
   if(it==='query') return doQuery(text);
   if(it==='delete') return doDelete(text);
   if(it==='move') return doMove(text);
+  if(it==='done') return doDone(text);
   return doCreate(text);
+}
+
+/* ---------- repetição ---------- */
+function expandRec(rec,startIso){
+  const s=fromIso(startIso),out=[];
+  const until=rec.until?fromIso(rec.until):rec.type==='daily'?addDays(s,59):rec.type==='monthly'?new Date(s.getFullYear()+1,s.getMonth(),s.getDate()-1):addDays(s,7*26-1);
+  if(rec.type==='daily'){for(let d=new Date(s);d<=until&&out.length<400;d=addDays(d,1))out.push(iso(d));return out}
+  if(rec.type==='weekly'){
+    const days=rec.days||[s.getDay()],iv=rec.interval||1,m0=mondayOf(s);
+    for(let d=new Date(s);d<=until&&out.length<400;d=addDays(d,1)){const w=Math.round((mondayOf(d)-m0)/(7*864e5));if(w%iv===0&&days.includes(d.getDay()))out.push(iso(d))}
+    return out;
+  }
+  const day=rec.day||s.getDate();
+  for(let k=0;k<400;k++){const last=new Date(s.getFullYear(),s.getMonth()+k+1,0).getDate();const d=new Date(s.getFullYear(),s.getMonth()+k,Math.min(day,last));if(d<s)continue;if(d>until)break;out.push(iso(d))}
+  return out;
+}
+function recLabel(rec,startIso){
+  const s=fromIso(startIso);
+  if(rec.type==='daily')return 'todo dia';
+  if(rec.type==='monthly')return 'todo dia '+(rec.day||s.getDate());
+  const days=rec.days||[s.getDay()];
+  if(days.join()==='1,2,3,4,5')return 'dias úteis (seg a sex)';
+  const nm=days.map(d=>WDL[d]);const txt=nm.length>1?nm.slice(0,-1).join(', ')+' e '+nm[nm.length-1]:nm[0];
+  return (rec.interval===2?'a cada 15 dias, ':'')+(days.some(d=>d===0||d===6)?'todo ':'toda ')+txt;
+}
+
+async function doDone(text){
+  const body=text.replace(/^\s*(?:ja\s+|já\s+)?\S+\s*/i,'');
+  const tIso=iso(today()),p=parse(body);
+  const pool=events.filter(e=>!e.done&&e.date<=tIso);
+  const saved=events;events=pool.length?pool:events;const e=findEvent(p.title||body,p.hasDate?p.date:null);events=saved;
+  if(!e) return bubble('Não achei qual compromisso marcar. Tenta <b>“feito relatório PLA”</b>.');
+  if(e.done) return bubble(`<b>${esc(e.title)}</b> já estava marcado como feito.`);
+  const before=snap();events=events.map(x=>x.id===e.id?{...x,done:true}:x);
+  await persistChanges(before);render();
+  bubble(`Feito ✓ <b>${esc(e.title)}</b><span class="when">${fmtDate(e.date)} · ${fmtTime(e)}</span>`,'bot',before);
 }
 
 async function doCreate(text){
@@ -632,8 +819,20 @@ async function doCreate(text){
     if(p.hasTime&&toMin(p.start)<nowMin()){p.date=iso(addDays(today(),1));note='Como esse horário já passou hoje, coloquei amanhã.'}
   }
   const before=snap();
-  const cl=classify(text,tab);
-  const ev={id:uid(),title:stripAreaTag(p.title)||p.title,date:p.date,start:p.start,end:p.end,...cl};
+  const cl=catOverride?{area:catOverride.split('|')[0],cat:catOverride.split('|')[1]}:classify(text,tab);catOverride='';
+  const ev={id:uid(),title:stripAreaTag(p.title)||p.title,date:p.date,start:p.start,end:p.end,...cl,done:false,series:null};
+  if(p.rec){
+    const start=p.hasDate?p.date:iso(today());
+    let dates=expandRec(p.rec,start);
+    if(!p.hasDate&&p.hasTime) dates=dates.filter(d=>!(d===iso(today())&&toMin(p.start)<nowMin()));
+    if(!dates.length) return bubble('Não achei nenhuma data para essa repetição. Confere o “até”?');
+    const series=uid(),occ=dates.map(d=>({...ev,id:uid(),date:d,series}));
+    events.push(...occ);
+    if(!both&&ev.area!==tab){tab=ev.area;note=`Fui para a aba ${AREA_LBL[ev.area]}.`}
+    await persistChanges(before); sel=occ[0].date; flashId=occ[0].id; render(); scrollToFirst();
+    const last=fromIso(dates[dates.length-1]);
+    return bubble(`Anotado ✓ <b>${esc(ev.title)}</b>${tagHtml(ev)}<span class="when">🔁 ${recLabel(p.rec,start)} · ${fmtTime(ev)}</span><span class="when">${dates.length} vez${dates.length>1?'es':''}, de ${fmtDate(dates[0])} até ${pad(last.getDate())}/${pad(last.getMonth()+1)}/${last.getFullYear()}${p.rec.until?'':'. Quando chegar perto do fim, é só mandar de novo'}.</span>${note?`<span class="when">${note}</span>`:''}`,'bot',before);
+  }
   events.push(ev);
   if(!both&&ev.area!==tab){tab=ev.area;note=(note?note+' ':'')+`Fui para a aba ${AREA_LBL[ev.area]}.`}
   await persistChanges(before); sel=ev.date; flashId=ev.id; render(); scrollToFirst();
@@ -643,8 +842,14 @@ async function doCreate(text){
 async function doDelete(text){
   const body=text.replace(/^\s*\S+\s*/,'');
   const p=parse(body);
-  const e=findEvent(p.title||body,p.hasDate?p.date:null);
+  const all=/\b(tod[ao]s|serie|sempre)\b/.test(norm(body));
+  const e=findEvent((p.title||body).replace(/\b(tod[ao]s?\s+(?:as|os)?|a serie|da serie|serie)\b/gi,''),p.hasDate?p.date:null);
   if(!e) return bubble('Não achei esse compromisso. Tenta usar uma palavra do título, tipo <b>“cancela dentista”</b>.');
+  if(all&&e.series){
+    const tIso=iso(today()),gone=events.filter(x=>x.series===e.series&&x.date>=tIso);
+    const before=snap(); const ids=new Set(gone.map(x=>x.id)); events=events.filter(x=>!ids.has(x.id)); await persistChanges(before); render();
+    return bubble(`Cancelei a série <b>${esc(e.title)}</b>: ${gone.length} compromisso${gone.length>1?'s':''} de hoje em diante.`,'bot',before);
+  }
   const before=snap(); events=events.filter(x=>x.id!==e.id); await persistChanges(before); sel=e.date; render();
   bubble(`Cancelado: <b>${esc(e.title)}</b><span class="when">${fmtDate(e.date)} · ${fmtTime(e)}</span>`,'bot',before);
 }
@@ -672,7 +877,7 @@ function doQuery(text){
   if(/\bsemana\b/.test(n)){
     from=p.hasDate?fromIso(p.date):today();
     if(/semana que vem|proxima semana/.test(n)) from=addDays(mondayOf(today()),7);
-    to=addDays(from,6); label=/semana que vem|proxima semana/.test(n)?'na semana que vem':'nos próximos 7 dias';
+    viewMode='semana'; to=addDays(from,6); label=/semana que vem|proxima semana/.test(n)?'na semana que vem':'nos próximos 7 dias';
   } else {
     from=to=p.hasDate?fromIso(p.date):today(); label=fmtDate(iso(from));
   }
@@ -695,10 +900,12 @@ function updatePreview(){
   const it=intent(v);
   if(it==='create'){
     const p=parse(v);
-    const date=p.hasDate?fmtDate(p.date):'<span class="lbl">sem data → hoje</span>';
+    const date=p.rec?`🔁 ${recLabel(p.rec,p.hasDate?p.date:iso(today()))}${p.hasDate?' · a partir de '+fmtDate(p.date):''}${p.rec.until?' · até '+fromIso(p.rec.until).getDate()+'/'+pad(fromIso(p.rec.until).getMonth()+1):''}`:p.hasDate?fmtDate(p.date):'<span class="lbl">sem data → hoje</span>';
     const time=p.hasTime?`${p.start}–${p.end}`:'<span class="lbl">dia todo</span>';
-    const cl=classify(v,tab);
-    preview.innerHTML=`<span class="lbl">vai ficar:</span><span class="pill">${esc(stripAreaTag(p.title)||'…')}</span><span class="pill">${date}</span><span class="pill">${time}</span><span class="pill" style="background:var(--b-${cl.cat});color:var(--c-${cl.cat})">${AREA_LBL[cl.area]} · ${CATS[cl.area][cl.cat.slice(2)]}</span>`;
+    const auto=classify(v,tab), cl=catOverride?{area:catOverride.split('|')[0],cat:catOverride.split('|')[1]}:auto;
+    const opts=Object.keys(CATS).map(ar=>`<optgroup label="${AREA_LBL[ar]}">${Object.entries(CATS[ar]).map(([k,l])=>{const val=ar+'|'+ar[0]+'-'+k;return `<option value="${val}"${catOverride===val?' selected':''}>${AREA_LBL[ar]} · ${l}</option>`}).join('')}</optgroup>`).join('');
+    preview.innerHTML=`<span class="lbl">vai ficar:</span><span class="pill">${esc(stripAreaTag(p.title)||'…')}</span><span class="pill">${date}</span><span class="pill">${time}</span><select class="catpick" title="Trocar a categoria" style="background:var(--b-${cl.cat});color:var(--c-${cl.cat})"><option value=""${catOverride?'':' selected'}>${AREA_LBL[auto.area]} · ${CATS[auto.area][auto.cat.slice(2)]} (automático)</option>${opts}</select>`;
+    preview.querySelector('.catpick').onchange=e=>{catOverride=e.target.value;updatePreview()};
   } else {
     preview.innerHTML=`<span class="lbl">${{delete:'cancelar um compromisso',move:'remarcar um compromisso',query:'consultar a agenda'}[it]}</span>`;
   }
@@ -709,7 +916,7 @@ document.getElementById('form').addEventListener('submit',async e=>{
   e.preventDefault();const v=input.value.trim();if(!v||mutationBusy)return;
   if(!backendReady){showLogin();return;}
   mutationBusy=true;input.disabled=true;updatePreview();bubble(esc(v),'me');
-  try{await handle(v);input.value='';input.style.height='auto';}
+  try{await handle(v);input.value='';input.style.height='auto';catOverride='';}
   catch(error){bubble('Não consegui concluir: '+esc(error.message));}
   finally{mutationBusy=false;input.disabled=!backendReady;updatePreview();}
 });
@@ -737,9 +944,12 @@ const GUIDE={
     tarefa:{what:'Coisas que você mesma faz, sem reunião e sem prazo formal. Bom para reservar um horário de foco.',
       kw:'enviar, mandar, responder, revisar, ajustar, atualizar, criar, montar, preparar, conferir, validar, planilha, fluxo, n8n, protocolo, e-mail',
       ex:['revisar fluxo n8n amanhã às 10h','responder protocolos do Intergrall hoje à tarde','atualizar planilha de inadimplência quarta 9h']},
+    folga:{what:'Dias e horários em que você não está no escritório ou não está trabalhando: férias, folga, home office, atestado. Sem horário, vira uma faixa de dia todo.',
+      kw:'férias, folga, day off, home office, atestado, abono, ponto facultativo, recesso, afastamento, licença, banco de horas, ausência',
+      ex:['home office segunda','folga dia 24','férias de 2/1 #trabalho']},
     outro:{what:'É do trabalho, mas não se encaixa nas outras. Escreva #trabalho para garantir que caia aqui.',
       kw:'qualquer coisa com #trabalho que não tenha as palavras das outras categorias',
-      ex:['confraternização do time sexta 18h #trabalho','home office segunda #trabalho']}
+      ex:['confraternização do time sexta 18h #trabalho','almoço com o time quinta 12h #trabalho']}
   },
   pessoal:{
     saude:{what:'Cuidados com a saúde: consultas, exames, vacinas e idas à farmácia.',
@@ -752,7 +962,7 @@ const GUIDE={
       kw:'academia, treino, musculação, funcional, pilates, yoga, corrida, caminhada, natação, bike, crossfit, futebol',
       ex:['pilates quarta às 7h','academia amanhã de manhã','corrida sábado 8h por 1h']},
     faculdade:{what:'Tudo da faculdade: aulas, provas, trabalhos, TCC e horas de estudo. "Trabalho da faculdade" cai aqui, não na aba Trabalho.',
-      kw:'faculdade, facul, aula, prova, TCC, seminário, estudar, estudo, matrícula, professor, orientador, monografia, disciplina, semestre, MBA, pós',
+      kw:'faculdade, facul, aula, inglês, espanhol, idioma, curso, prova, TCC, seminário, estudar, estudo, matrícula, professor, orientador, monografia, disciplina, semestre, MBA, pós',
       ex:['prova da faculdade dia 25 às 19h','entregar trabalho da faculdade sexta','estudar para a prova sábado de manhã']},
     social:{what:'Encontros, passeios e comemorações com amigos e família.',
       kw:'almoço, jantar, café, aniversário, festa, happy hour, encontro, bar, churrasco, cinema, show, viagem, praia, passeio, visita',
@@ -760,9 +970,18 @@ const GUIDE={
     casa:{what:'Contas a pagar, compras e coisas da casa.',
       kw:'pagar, conta, fatura, boleto, aluguel, condomínio, mercado, compras, faxina, limpeza, lavar, conserto, manutenção, reforma',
       ex:['pagar fatura do cartão dia 10','mercado sábado de manhã','faxina quinta das 8h às 12h']},
+    documentos:{what:'Burocracia e papelada: cartório, documentos, banco, imposto de renda, Detran. Bom para não perder prazo.',
+      kw:'cartório, passaporte, RG, CNH, Detran, imposto de renda, IRPF, INSS, Receita Federal, CPF, documento, certidão, procuração, reconhecer firma, despachante, IPVA, licenciamento, Poupatempo, agência do banco',
+      ex:['renovar passaporte terça 9h','declarar imposto de renda dia 25','pagar IPVA até sexta']},
+    pets:{what:'Tudo do seu bicho: veterinário, vacina, banho e tosa, ração.',
+      kw:'veterinário, vet, banho e tosa, tosa, petshop, ração, vermífugo, castração, cachorro, gato, pet',
+      ex:['veterinário sábado às 10h','banho e tosa quinta 14h','vacina do cachorro dia 30']},
+    viagem:{what:'Viagens e deslocamentos: voo, ônibus, hotel, check-in. Lazer do dia a dia continua em Social e lazer.',
+      kw:'viagem, viajar, voo, aeroporto, passagem, hotel, hospedagem, Airbnb, check-in, check-out, mala, rodoviária, embarque',
+      ex:['voo para Recife sexta às 7h','check-in do hotel sábado 14h','comprar passagem para o Natal amanhã']},
     outro:{what:'É pessoal, mas não se encaixa nas outras. Escreva #pessoal para garantir que caia aqui.',
       kw:'qualquer coisa com #pessoal que não tenha as palavras das outras categorias',
-      ex:['renovar passaporte terça #pessoal','buscar encomenda nos correios amanhã #pessoal']}
+      ex:['buscar encomenda nos correios amanhã #pessoal','trocar a tela do celular sábado #pessoal']}
   }
 };
 const TIPS=`<div class="gtips">
@@ -810,10 +1029,10 @@ let backendReady=false,mutationBusy=false;
 const authDialog=document.getElementById('cloud-login'),cloudStatus=document.getElementById('cloud-status');
 function cloudMessage(message){cloudStatus.textContent=message;}
 function showLogin(){document.getElementById('cloud-error').textContent='';if(!authDialog.open)authDialog.showModal();}
-function prefs(){try{localStorage.setItem('agenda-cloud-preferences',JSON.stringify({tab,both}));}catch{}}
+function prefs(){try{localStorage.setItem('agenda-cloud-preferences',JSON.stringify({tab,both,viewMode}));}catch{}}
 async function persistChanges(before){
  try{await cloud.apply(before,events);prefs();}
- catch(error){events=before;render();throw error;}
+ catch(error){events=before;render();cloud.list().then(r=>{events=r;render()}).catch(()=>{});throw error;}
 }
 
 /* ================= Coockiepit dentro da agenda =================
@@ -932,6 +1151,56 @@ document.getElementById('mig-form').addEventListener('submit',async ev=>{
   finally{go.disabled=false}
 });
 
+/* ---------- editar compromisso / trocar categoria na mão ---------- */
+let catOverride='', editId=null;
+document.querySelectorAll('.vtog button').forEach(b=>b.onclick=()=>{viewMode=b.dataset.m;prefs();render();scrollToFirst()});
+const editDlg=document.getElementById('edit');
+const $e=id=>document.getElementById('edit-'+id);
+function fillCats(area,sel){$e('c').innerHTML=Object.entries(CATS[area]).map(([k,l])=>{const v=area[0]+'-'+k;return `<option value="${v}"${v===sel?' selected':''}>${l}</option>`}).join('')}
+function syncAllDay(){const off=$e('all').checked;$e('s').disabled=off;$e('e').disabled=off}
+function openEdit(id){
+  if(!backendReady||mutationBusy)return;const e=events.find(x=>x.id===id);if(!e)return;
+  editId=id;$e('t').value=e.title;$e('d').value=e.date;$e('all').checked=!e.start;
+  $e('s').value=e.start||'09:00';$e('e').value=e.end||'10:00';$e('a').value=e.area;fillCats(e.area,e.cat);
+  $e('n').value=e.notes||'';$e('msg').textContent='';$e('done').checked=!!e.done;
+  const nxt=e.series?events.filter(x=>x.series===e.series&&x.date>e.date).length:0;
+  $e('series').classList.toggle('on',nxt>0);$e('ser').checked=false;
+  $e('ser-lbl').textContent=`Aplicar título, horário, aba e categoria também aos próximos ${nxt} desta série`;
+  $e('delser').hidden=!e.series;$e('delser').textContent=`Excluir este e os próximos da série (${nxt+1})`;
+  syncAllDay();editDlg.showModal();
+}
+$e('all').onchange=syncAllDay;
+$e('a').onchange=()=>fillCats($e('a').value,'');
+$e('s').onchange=()=>{const s=$e('s').value,en=$e('e').value;if(s&&(!en||en<=s))$e('e').value=toHM(toMin(s)+60)};
+$e('close').onclick=$e('cancel').onclick=()=>editDlg.close();
+$e('del').onclick=async()=>{const id=editId;editDlg.close();await removeEv(id)};
+$e('delser').onclick=async()=>{
+  const e=events.find(x=>x.id===editId);if(!e||!e.series||mutationBusy)return;
+  const gone=events.filter(x=>x.series===e.series&&x.date>=e.date);
+  if(!confirm(`Excluir ${gone.length} compromisso${gone.length>1?'s':''} de “${e.title}” (deste em diante)?`))return;
+  const ids=new Set(gone.map(x=>x.id)),before=snap();events=events.filter(x=>!ids.has(x.id));mutationBusy=true;
+  try{await persistChanges(before);editDlg.close();render();bubble(`Cancelei a série <b>${esc(e.title)}</b>: ${gone.length} compromisso${gone.length>1?'s':''}.`,'bot',before)}
+  catch(err){$e('msg').textContent=err.message}finally{mutationBusy=false;updatePreview()}
+};
+$e('form').addEventListener('submit',async ev=>{
+  ev.preventDefault();const e=events.find(x=>x.id===editId);if(!e||mutationBusy)return;
+  const allDay=$e('all').checked,s=allDay?null:$e('s').value,en=allDay?null:$e('e').value;
+  if(!allDay&&(!s||!en||en<=s)){$e('msg').textContent='O fim precisa ser depois do início, no mesmo dia.';return}
+  const t=$e('t').value.trim();if(!t){$e('msg').textContent='Escreva um título.';return}
+  const upd={...e,title:t,date:$e('d').value,start:s,end:en,area:$e('a').value,cat:$e('c').value,notes:$e('n').value.trim(),done:$e('done').checked};
+  const toSeries=e.series&&$e('ser').checked;
+  if(JSON.stringify(upd)===JSON.stringify(e)&&!toSeries){editDlg.close();return}
+  const before=snap();
+  events=events.map(x=>x.id===e.id?upd:(toSeries&&x.series===e.series&&x.date>e.date?{...x,title:upd.title,start:upd.start,end:upd.end,area:upd.area,cat:upd.cat,notes:upd.notes}:x));mutationBusy=true;$e('save').disabled=true;
+  try{await persistChanges(before);editDlg.close();
+    if(!both&&upd.area!==tab)tab=upd.area;sel=upd.date;flashId=upd.id;render();scrollToFirst();
+    bubble(`Atualizado ✓ <b>${esc(upd.title)}</b>${tagHtml(upd)}<span class="when">${fmtDate(upd.date)} · ${fmtTime(upd)}</span>`,'bot',before);}
+  catch(err){$e('msg').textContent=err.message}
+  finally{mutationBusy=false;$e('save').disabled=false;updatePreview()}
+});
+
+document.getElementById('clearChat').onclick=()=>{msgs.replaceChildren();input.focus()};
+
 async function refreshCloud(){
  if(mutationBusy)return;backendReady=false;document.getElementById('input').disabled=true;document.getElementById('send').disabled=true;cloudMessage('Carregando agenda…');
  try{events=await cloud.list();backendReady=true;ckLoad();cloudMessage('Salvo no Supabase · '+(cloud.user?.email||'conta conectada'));render();scrollToFirst();if(authDialog.open)authDialog.close();migShow();}
@@ -953,7 +1222,7 @@ document.getElementById('cloud-logout').onclick=async()=>{
 document.getElementById('reset').onclick=async()=>{try{await refreshCloud();}catch(error){bubble(esc(error.message));}};
 document.getElementById('reset').textContent='atualizar';document.getElementById('reset').title='Atualizar compromissos do Supabase';
 // O armazenamento antigo não é importado: pode conter os exemplos da prévia.
-(async()=>{let stored=null;try{stored=JSON.parse(localStorage.getItem('agenda-cloud-preferences')||'null');}catch{}if(stored){tab=['trabalho','pessoal'].includes(stored.tab)?stored.tab:'trabalho';both=!!stored.both;}events=[];render();welcome();document.getElementById('input').disabled=true;cloudMessage('Entre para carregar sua agenda.');if(cloud.user){try{await refreshCloud();}catch{showLogin();}}else showLogin();})();
+(async()=>{let stored=null;try{stored=JSON.parse(localStorage.getItem('agenda-cloud-preferences')||'null');}catch{}if(stored){tab=['trabalho','pessoal'].includes(stored.tab)?stored.tab:'trabalho';both=!!stored.both;viewMode=stored.viewMode==='semana'?'semana':'dia';}events=[];render();welcome();document.getElementById('input').disabled=true;cloudMessage('Entre para carregar sua agenda.');if(cloud.user){try{await refreshCloud();}catch{showLogin();}}else showLogin();})();
 async function removeEv(id){
  if(!backendReady||mutationBusy)return;const item=events.find(e=>e.id===id);if(!item)return;
  if(!confirm('Excluir '+item.title+'?'))return;const before=snap();mutationBusy=true;events=events.filter(e=>e.id!==id);
