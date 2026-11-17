@@ -190,11 +190,32 @@
 .appsw.light>a,.appsw.light>span{padding:5px 11px}
 .appsw.light{--sw-bg:#fff;--sw-line:#DCDEEE;--sw-fg:#4A4F78;--sw-fg-strong:#000948;--sw-hover:#ECEDF7}
 @media(max-width:520px){.appsw>a,.appsw>span{padding:7px 10px}.appsw .lbl{display:none}}
+
+/* pedaço do Coockiepit dentro da agenda */
+.ckpanel{background:#000948;color:#E9EBFF;border-radius:14px;padding:10px 12px 12px;margin-bottom:12px}
+.ckpanel .ckh{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:#FBC358;margin-bottom:8px}
+.ckpanel .ckh .cnt{color:#8F95C9;letter-spacing:.04em;text-transform:none;font-weight:600;font-size:12px}
+.ckpanel .ckh a{margin-left:auto;color:#B9BEEA;text-transform:none;letter-spacing:0;font-size:12px;text-decoration:none;font-weight:600}
+.ckpanel .ckh a:hover{color:#fff}
+.ckpanel .ckl{display:flex;flex-direction:column;gap:5px;max-height:190px;overflow:auto}
+.ckrow{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;background:rgba(255,255,255,.06);border-radius:9px;padding:6px 10px;font-size:13.5px}
+.ckrow.late{box-shadow:inset 3px 0 0 #FF7A7A}
+.ckrow.done .ckt{text-decoration:line-through;color:#8F95C9}
+.ckrow input{appearance:none;width:18px;height:18px;border:2px solid #8F95C9;border-radius:5px;margin:0;cursor:pointer;display:grid;place-items:center;background:transparent}
+.ckrow input:checked{background:#4002FF;border-color:#4002FF}
+.ckrow input:checked::after{content:"";width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.ckrow input:disabled{opacity:.5;cursor:default}
+.ckt{font-weight:600;overflow-wrap:anywhere}
+.ckc{font-size:11px;padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.1);color:#B9BEEA;white-space:nowrap}
+.ckc.late{background:rgba(255,122,122,.18);color:#FF9C9C}.ckc.ok{background:rgba(76,201,149,.18);color:#7FE0B5}
+.ckpanel .ckmsg{font-size:12.5px;color:#8F95C9}
+.day .ckn{position:absolute;right:8px;bottom:8px;font-size:10.5px;font-weight:700;color:#4002FF;background:#ECE6FF;border-radius:6px;padding:1px 5px}
+.day.sel .ckn{background:#3A3833;color:#FBC358}
 </style>
 </head>
 <body>
 <div class="cloud-bar"><span id="cloud-status" role="status">Conectando ao Supabase…</span><div class="cloud-buttons"><nav class="appsw light" aria-label="Trocar de app"><a href="https://alyhrvds.github.io/coockiepit/" title="Ir para Coockiepit"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M20.5 12.6A8.5 8.5 0 1 1 11.4 3.5a3 3 0 0 0 3.6 3.6 3 3 0 0 0 3.6 3.6c.6.6 1.3 1.1 1.9 1.9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="8.5" cy="10" r="1.3" fill="currentColor"/><circle cx="9.5" cy="15.5" r="1.3" fill="currentColor"/><circle cx="14.5" cy="15" r="1.3" fill="currentColor"/></svg><span class="lbl">Coockiepit</span></a><span aria-current="page"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 10h18" stroke="currentColor" stroke-width="2"/><path d="M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="8.5" cy="14.5" r="1.3" fill="currentColor"/><circle cx="12" cy="14.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="14.5" r="1.3" fill="currentColor"/></svg><span class="lbl">Agenda</span></span></nav><button id="cloud-account" type="button">Conta</button><button id="cloud-logout" type="button">Sair</button></div></div>
-<dialog id="cloud-login" class="cloud-modal" aria-labelledby="cloud-title"><button id="cloud-close" type="button" aria-label="Fechar">×</button><h2 id="cloud-title">Sua agenda, com você</h2><p>Entre com o e-mail e a senha criados no Supabase.</p><form id="cloud-form"><label>E-mail<input id="cloud-email" type="email" autocomplete="username" required></label><label>Senha<input id="cloud-password" type="password" autocomplete="current-password" required></label><button id="cloud-enter" type="submit">Entrar na agenda</button><p id="cloud-error" role="status"></p></form><p class="cloud-note">Os compromissos desta versão ficam na sua conta. Os exemplos da prévia não são importados. WhatsApp ainda não conectado.</p></dialog>
+<dialog id="cloud-login" class="cloud-modal" aria-labelledby="cloud-title"><button id="cloud-close" type="button" aria-label="Fechar">×</button><h2 id="cloud-title">Sua agenda, com você</h2><p>Entre com o mesmo e-mail e senha do Coockiepit.</p><form id="cloud-form"><label>E-mail<input id="cloud-email" type="email" autocomplete="username" required></label><label>Senha<input id="cloud-password" type="password" autocomplete="current-password" required></label><button id="cloud-enter" type="submit">Entrar na agenda</button><p id="cloud-error" role="status"></p></form><p class="cloud-note">Os compromissos desta versão ficam na sua conta. Os exemplos da prévia não são importados. WhatsApp ainda não conectado.</p></dialog>
 
 <div class="app">
   <section class="agenda">
@@ -218,6 +239,7 @@
       <div class="week" id="week"></div>
       <div class="legend" id="legend"></div>
       <div class="dayhead"><h2 id="dayTitle"></h2><span id="dayCount"></span></div>
+      <div class="ckpanel" id="ckpanel" hidden></div>
       <div class="allday" id="allday"></div>
       <div class="scroll" id="scroll"><div class="grid" id="grid"></div></div>
     </div>
@@ -264,7 +286,7 @@
 (function(root){
 'use strict';
 function createCloud({url,key,storage=localStorage,fetcher=fetch}){
- const sk='agenda.supabase.session.'+new URL(url).hostname;let session=null,refreshJob=null;
+ const sk='sb-'+new URL(url).hostname.split('.')[0]+'-auth-token';let session=null,refreshJob=null;
  try{session=JSON.parse(storage.getItem(sk)||'null');}catch{}
  function remember(s){session=s?{...s,expires_at:s.expires_at||Math.floor(Date.now()/1000)+(s.expires_in||3600)}:null;if(session)storage.setItem(sk,JSON.stringify(session));else storage.removeItem(sk);}
  async function req(path,{method='GET',body,token}={}){
@@ -273,7 +295,7 @@ function createCloud({url,key,storage=localStorage,fetcher=fetch}){
   const text=await response.text();let data;try{data=text?JSON.parse(text):null;}catch{}
   if(!response.ok){let msg=data?.error_description||data?.msg||data?.message||'Falha de conexão ('+response.status+').';if(response.status===401||response.status===403)msg='Acesso não autorizado. Confira seu login e as regras de acesso.';if(data?.error_code==='invalid_credentials')msg='E-mail ou senha incorretos.';if(data?.code==='PGRST205')msg='A tabela agenda_events não foi encontrada. Confira se o SQL foi executado no mesmo projeto.';throw new Error(msg);}return data;
  }
- async function token(){if(!session)throw new Error('Entre na sua conta para acessar a agenda.');if(session.expires_at*1000<Date.now()+60000){if(!refreshJob)refreshJob=req('/auth/v1/token?grant_type=refresh_token',{method:'POST',body:{refresh_token:session.refresh_token}}).then(s=>{remember(s);return s;}).finally(()=>refreshJob=null);await refreshJob;}return session.access_token;}
+ async function token(){try{session=JSON.parse(storage.getItem(sk)||'null');}catch{}if(!session)throw new Error('Entre na sua conta para acessar a agenda.');if(session.expires_at*1000<Date.now()+60000){if(!refreshJob)refreshJob=req('/auth/v1/token?grant_type=refresh_token',{method:'POST',body:{refresh_token:session.refresh_token}}).then(s=>{remember(s);return s;}).finally(()=>refreshJob=null);await refreshJob;}return session.access_token;}
  function payload(e){return {id:e.id,title:e.title,date:e.date,start:e.start?.slice(0,5)||null,end:e.end?.slice(0,5)||null,area:e.area,cat:e.cat,person:e.person||'',notes:e.notes||''};}
  async function signIn(email,password){const s=await req('/auth/v1/token?grant_type=password',{method:'POST',body:{email,password}});remember(s);return s.user;}
  async function signOut(){try{if(session)await req('/auth/v1/logout',{method:'POST',token:await token()});}finally{remember(null);}}
@@ -287,7 +309,8 @@ function createCloud({url,key,storage=localStorage,fetcher=fetch}){
   try{const rows=await req(path,{method,body:value||undefined,token:jwt});if(!Array.isArray(rows)||rows.length!==1)throw new Error('O compromisso não foi encontrado ou não pode ser alterado. Atualize a agenda.');}
   catch(e){e.message+=' Se houve falha de conexão, clique em atualizar antes de repetir a operação.';throw e;}
  }
- return {signIn,signOut,list,apply,payload,get user(){return session?.user||null;}};
+ async function rest(path,opts={}){return req(path,{...opts,token:await token()});}
+ return {signIn,signOut,list,apply,payload,rest,get user(){return session?.user||null;}};
 }
 root.createAgendaCloud=createCloud;if(typeof module!=='undefined')module.exports={createCloud};
 })(typeof globalThis!=='undefined'?globalThis:this);
@@ -505,7 +528,7 @@ function render(){
     const evs=vis.filter(e=>e.date===di);
     const b=document.createElement('button');
     b.className='day'+(di===sel?' sel':'')+(di===tIso?' today':'');
-    b.innerHTML=`<div class="wd">${WD[d.getDay()]}</div><div class="num">${d.getDate()}</div><div class="dots">${sortEv(evs).slice(0,4).map(e=>`<i style="background:var(--d-${e.cat})"></i>`).join('')}</div>`;
+    b.innerHTML=`<div class="wd">${WD[d.getDay()]}</div><div class="num">${d.getDate()}</div><div class="dots">${sortEv(evs).slice(0,4).map(e=>`<i style="background:var(--d-${e.cat})"></i>`).join('')}</div>${ckOn()&&CK.ok&&di>=tIso?(n=>n?`<span class="ckn" title="${n} rotina${n>1?'s':''} do Coockiepit pendente${n>1?'s':''}">🍪 ${n}</span>`:'')(ckDay(d).filter(x=>!x.done).length):''}`;
     b.onclick=()=>{sel=di;render()};
     wk.appendChild(b);
   }
@@ -514,6 +537,7 @@ function render(){
   const dayEv=sortEv(vis.filter(e=>e.date===sel));
   document.getElementById('dayCount').textContent=dayEv.length?`${dayEv.length} compromisso${dayEv.length>1?'s':''}`:'livre';
 
+  renderCk(d);
   const ad=document.getElementById('allday'); ad.innerHTML='';
   dayEv.filter(e=>!e.start).forEach(e=>{
     const c=document.createElement('span'); c.className='chip';
@@ -774,7 +798,8 @@ document.getElementById('next').onclick=()=>{sel=iso(addDays(fromIso(sel),7));re
 document.getElementById('todayBtn').onclick=()=>{sel=iso(today());render();scrollToFirst()};
 setInterval(()=>{if(sel===iso(today()))render()},60000);
 
-const cloud=createAgendaCloud({url:'https://kajiivfqkeqgbjmqbqhe.supabase.co',key:'sb_publishable_WALdDR04VVY7WonuQUDsoA_SlrFacaK'});
+/* mesmo projeto do Coockiepit: um login só para as duas páginas */
+const cloud=createAgendaCloud({url:'https://qmzpulguwqbyaibivbmn.supabase.co',key:'sb_publishable_TuyLRBTM9qR1Y66zc1ksjw_OGLRtMLd'});
 let backendReady=false,mutationBusy=false;
 const authDialog=document.getElementById('cloud-login'),cloudStatus=document.getElementById('cloud-status');
 function cloudMessage(message){cloudStatus.textContent=message;}
@@ -784,9 +809,101 @@ async function persistChanges(before){
  try{await cloud.apply(before,events);prefs();}
  catch(error){events=before;render();throw error;}
 }
+
+/* ================= Coockiepit dentro da agenda =================
+   Lê as tabelas "rotinas" e "historico" do Coockiepit (mesmo projeto do Supabase)
+   e usa as mesmas regras de vencimento. Marcar aqui grava no histórico do Coockiepit. */
+const CK_URL='https://alyhrvds.github.io/coockiepit/';
+const CK={rotinas:[],hist:{},ok:false,err:null,busy:new Set()};
+const CK_FERIADOS=new Set(["2026-01-01","2026-02-16","2026-02-17","2026-04-03","2026-04-21","2026-05-01","2026-06-04","2026-09-07","2026-10-12","2026-11-02","2026-11-15","2026-11-20","2026-12-25","2027-01-01","2027-02-08","2027-02-09","2027-03-26","2027-04-21","2027-05-01","2027-05-27","2027-09-07","2027-10-12","2027-11-02","2027-11-15","2027-11-20","2027-12-25"]);
+const CK_INICIO="2026-10-12";
+const ckFreq={diaria:'Diária',semanal:'Semanal',mensal:'Mensal',avulsa:'Tarefa'};
+const ckMid=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate());
+const ckUtil=d=>{const w=d.getDay();return w>0&&w<6&&!CK_FERIADOS.has(iso(d))};
+const ckNext=d=>{while(!ckUtil(d))d=addDays(d,1);return d};
+const ckPrev=d=>{while(!ckUtil(d))d=addDays(d,-1);return d};
+function ckIsoWeek(d){const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const day=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-day);const y=t.getUTCFullYear();return [y,Math.ceil(((t-Date.UTC(y,0,1))/864e5+1)/7)]}
+function ckLastUtil(y,m){let d=new Date(y,m+1,0);while(!ckUtil(d))d=addDays(d,-1);return d}
+function ckUtilN(y,m,n){let c=0;for(let day=1;day<=31;day++){const d=new Date(y,m,day);if(d.getMonth()!==m)break;if(ckUtil(d)&&++c===n)return d}return ckLastUtil(y,m)}
+function ckVenc(r,ref){
+  const g=r.regra||{};
+  if(r.freq==='diaria')return ckMid(ref);
+  if(r.freq==='semanal'){const mon=mondayOf(ref);if(!g.dia)return ckPrev(addDays(mon,4));const d=addDays(mon,g.dia-1);return ckUtil(d)?d:(ckPrev(d)>=mon?ckPrev(d):ckNext(d))}
+  const y=ref.getFullYear(),m=ref.getMonth();
+  if(g.tipo==='du')return ckUtilN(y,m,Math.max(1,+g.n||1));
+  if(g.tipo==='dia'){const last=new Date(y,m+1,0).getDate();const d=new Date(y,m,Math.min(+g.n||1,last));const nx=ckNext(d);return nx.getMonth()===m?nx:ckPrev(d)}
+  if(g.tipo==='ate'){const last=new Date(y,m+1,0).getDate();return ckPrev(new Date(y,m,Math.min(+g.n||1,last)))}
+  if(g.tipo==='ultimo')return ckLastUtil(y,m);
+  if(g.tipo==='primeiro_dow'){let d=new Date(y,m,1);while(d.getDay()!==+g.dia)d=addDays(d,1);return ckUtil(d)?d:ckNext(d)}
+  return ckLastUtil(y,m);
+}
+const ckKey=(r,d)=>{if(r.freq==='avulsa')return 'avulsa';if(r.freq==='diaria')return 'd-'+iso(d);if(r.freq==='semanal'){const[y,w]=ckIsoWeek(d);return 's-'+y+'-W'+pad(w)}return 'm-'+d.getFullYear()+'-'+pad(d.getMonth()+1)};
+const ckDone=(r,d)=>CK.hist[ckKey(r,d)]?.[r.id]||null;
+const ckOn=()=>both||tab==='trabalho';
+const ckAtivas=()=>CK.rotinas.filter(r=>r.ativa!==false).sort((a,b)=>(a.ordem||0)-(b.ordem||0)||String(a.titulo).localeCompare(String(b.titulo)));
+const ckFmt=d=>pad(d.getDate())+'/'+pad(d.getMonth()+1);
+/* o que o Coockiepit tem para o dia d (atrasados e tarefas avulsas só aparecem no dia de hoje) */
+function ckDay(d){
+  const out=[],hoje=today(),isHoje=iso(d)===iso(hoje);
+  for(const r of ckAtivas()){
+    if(r.freq==='avulsa'){if(isHoje&&!ckDone(r,d))out.push({r,done:null,late:false});continue}
+    if(r.freq==='diaria'){if(ckUtil(d))out.push({r,done:ckDone(r,d),late:false});continue}
+    const v=ckVenc(r,d);if(iso(v)<CK_INICIO)continue;
+    const f=ckDone(r,d);
+    if(iso(v)===iso(d))out.push({r,done:f,late:false,venc:v});
+    else if(isHoje&&v<hoje&&!f)out.push({r,done:null,late:true,venc:v});
+    else if(isHoje&&v<hoje&&f&&iso(new Date(f.em))===iso(hoje))out.push({r,done:f,late:false,venc:v});
+  }
+  const ord=x=>x.late?0:x.done?3:x.r.freq==='avulsa'?2:1;
+  return out.sort((a,b)=>ord(a)-ord(b));
+}
+function renderCk(d){
+  const p=document.getElementById('ckpanel');
+  if(!ckOn()||(!CK.ok&&!CK.err)){p.hidden=true;return}
+  p.hidden=false;
+  const head=n=>`<div class="ckh">🍪 Coockiepit <span class="cnt">${n}</span><a href="${CK_URL}">abrir Coockiepit →</a></div>`;
+  if(CK.err){p.innerHTML=head('')+`<div class="ckmsg">${esc(CK.err)}</div>`;return}
+  const items=ckDay(d);
+  if(!items.length){p.innerHTML=head('')+`<div class="ckmsg">${ckUtil(d)?'Nenhuma rotina vence neste dia.':'Não é dia útil: sem rotinas.'}</div>`;return}
+  const pend=items.filter(x=>!x.done).length;
+  p.innerHTML=head(pend?`${pend} pendente${pend>1?'s':''}`:'tudo feito ✓')+'<div class="ckl"></div>';
+  const l=p.querySelector('.ckl'),future=d>today();
+  items.forEach(x=>{
+    const row=document.createElement('label');row.className='ckrow'+(x.done?' done':'')+(x.late?' late':'');
+    let chip=x.done?`<span class="ckc ok">feito ${new Date(x.done.em).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</span>`
+      :x.late?`<span class="ckc late">venceu ${ckFmt(x.venc)}</span>`:`<span class="ckc">${ckFreq[x.r.freq]}</span>`;
+    row.innerHTML=`<input type="checkbox"${x.done?' checked':''}${future||CK.busy.has(x.r.id)?' disabled':''} aria-label="Concluir ${esc(x.r.titulo)}"><span class="ckt">${esc(x.r.titulo)}</span>${chip}`;
+    if(future)row.title='Dá para marcar no dia (ou depois, se atrasar).';
+    row.querySelector('input').onchange=e=>ckToggle(x.r,x.late?today():d,e.target.checked);
+    l.appendChild(row);
+  });
+}
+async function ckToggle(r,d,marcar){
+  const key=ckKey(r,d),prev=CK.hist[key]?{...CK.hist[key]}:null;
+  CK.hist[key]={...(CK.hist[key]||{})};
+  if(marcar)CK.hist[key][r.id]={em:new Date().toISOString(),titulo:r.titulo};else delete CK.hist[key][r.id];
+  CK.busy.add(r.id);render();
+  try{
+    await cloud.rest('/rest/v1/historico?rotina_id=eq.'+encodeURIComponent(r.id)+'&periodo=eq.'+encodeURIComponent(key),{method:'DELETE'});
+    if(marcar)await cloud.rest('/rest/v1/historico',{method:'POST',body:{rotina_id:r.id,periodo:key,titulo:r.titulo,feito_em:CK.hist[key][r.id].em}});
+  }catch(e){if(prev)CK.hist[key]=prev;else delete CK.hist[key];bubble('Não consegui salvar no Coockiepit: '+esc(e.message))}
+  finally{CK.busy.delete(r.id);render()}
+}
+async function ckAll(table){const out=[];for(let o=0;;o+=1000){const rows=await cloud.rest(`/rest/v1/${table}?select=*&order=id.asc&limit=1000&offset=${o}`);if(!Array.isArray(rows))throw new Error('Resposta inesperada do Coockiepit.');out.push(...rows);if(rows.length<1000)return out}}
+async function ckLoad(){
+  try{
+    const [rot,his]=await Promise.all([ckAll('rotinas'),ckAll('historico')]);
+    CK.rotinas=rot.map(r=>({id:r.id,titulo:r.titulo,freq:r.freq,regra:r.regra||{},ativa:r.ativa!==false,ordem:Number(r.ordem)||0}));
+    const h={};for(const x of his){(h[x.periodo]=h[x.periodo]||{})[x.rotina_id]={em:x.feito_em,titulo:x.titulo}}
+    CK.hist=h;CK.ok=true;CK.err=null;
+  }catch(e){CK.ok=false;CK.err='Não consegui carregar as rotinas do Coockiepit. '+e.message}
+  render();
+}
+window.addEventListener('focus',()=>{if(backendReady&&!CK.busy.size)ckLoad()});
+
 async function refreshCloud(){
  if(mutationBusy)return;backendReady=false;document.getElementById('input').disabled=true;document.getElementById('send').disabled=true;cloudMessage('Carregando agenda…');
- try{events=await cloud.list();backendReady=true;cloudMessage('Salvo no Supabase · '+(cloud.user?.email||'conta conectada'));render();scrollToFirst();if(authDialog.open)authDialog.close();}
+ try{events=await cloud.list();backendReady=true;ckLoad();cloudMessage('Salvo no Supabase · '+(cloud.user?.email||'conta conectada'));render();scrollToFirst();if(authDialog.open)authDialog.close();}
  catch(error){cloudMessage(error.message);throw error;}
  finally{document.getElementById('input').disabled=!backendReady;updatePreview();}
 }
@@ -799,7 +916,7 @@ authDialog.addEventListener('cancel',e=>{if(!backendReady)e.preventDefault();});
 document.getElementById('cloud-account').onclick=()=>{if(mutationBusy)return;showLogin();};
 document.getElementById('cloud-close').onclick=()=>{if(backendReady)authDialog.close();};
 document.getElementById('cloud-logout').onclick=async()=>{
- if(mutationBusy)return;backendReady=false;events=[];document.getElementById('msgs').replaceChildren();render();document.getElementById('input').disabled=true;document.getElementById('send').disabled=true;
+ if(mutationBusy)return;backendReady=false;events=[];CK.ok=false;CK.err=null;CK.rotinas=[];CK.hist={};document.getElementById('msgs').replaceChildren();render();document.getElementById('input').disabled=true;document.getElementById('send').disabled=true;
  try{await cloud.signOut();}catch{}cloudMessage('Você saiu da conta.');showLogin();
 };
 document.getElementById('reset').onclick=async()=>{try{await refreshCloud();}catch(error){bubble(esc(error.message));}};
