@@ -123,7 +123,7 @@
   .chip .x,.ev .x{border:0;background:transparent;color:inherit;opacity:.0;font-size:16px;line-height:1;padding:0 4px;transition:opacity .12s}
   .chip:hover .x,.ev:hover .x{opacity:.7}
   .scroll{flex:1;overflow:auto;min-height:0;border-top:1px solid var(--line);padding-bottom:32px}
-  .grid{position:relative;margin-left:52px}
+  .grid{position:relative;margin-left:52px;margin-top:12px}
   .hr{height:var(--hour);border-bottom:1px dashed var(--line);position:relative}
   .hr b{position:absolute;left:-52px;top:-8px;font-size:11px;font-weight:600;color:var(--ink3);width:42px;text-align:right}
   .ev{position:absolute;border-radius:10px;padding:6px 8px 6px 11px;overflow:hidden;font-size:13px;border-left:3px solid;display:flex;justify-content:space-between;gap:4px;animation:pop .35s ease}
@@ -548,7 +548,7 @@ function render(){
     ad.appendChild(c);
   });
 
-  const H0=6,H1=24, HOUR=56, g=document.getElementById('grid'); g.innerHTML='';
+  const H0=0,H1=24, HOUR=56, g=document.getElementById('grid'); g.innerHTML='';
   for(let h=H0;h<H1;h++){const r=document.createElement('div');r.className='hr';r.innerHTML=`<b>${pad(h)}:00</b>`;g.appendChild(r)}
   const timed=dayEv.filter(e=>e.start).map(e=>({e,s:toMin(e.start),f:Math.max(toMin(e.end),toMin(e.start)+20)}));
   // colunas para eventos sobrepostos
@@ -564,13 +564,13 @@ function render(){
     g.appendChild(el);
   });
   if(sel===iso(today())){const nm=nowMin();if(nm>=H0*60){const n=document.createElement('div');n.className='now';n.style.top=((nm-H0*60)/60*HOUR)+'px';g.appendChild(n)}}
-  if(!dayEv.length){const e=document.createElement('div');e.className='empty';e.textContent='Nada por aqui. Mande uma mensagem ao lado →';g.appendChild(e)}
+  if(!dayEv.length){const e=document.createElement('div');e.className='empty';e.style.top=(Math.max(0,((sel===iso(today())?nowMin():480)-60)/60*HOUR)+40)+'px';e.textContent='Nada por aqui. Mande uma mensagem ao lado →';g.appendChild(e)}
   if(flashId){setTimeout(()=>{flashId=null;document.querySelectorAll('.ev.flash').forEach(x=>x.classList.remove('flash'))},1400)}
 }
 function scrollToFirst(){
   const dayEv=visible().filter(e=>e.date===sel&&e.start).map(e=>toMin(e.start));
   const m=dayEv.length?Math.min(...dayEv):(sel===iso(today())?nowMin():480);
-  document.getElementById('scroll').scrollTop=Math.max(0,(m-6*60)/60*56-40);
+  document.getElementById('scroll').scrollTop=Math.max(0,(m-60)/60*56);
 }
 
 /* ---------- chat ---------- */
